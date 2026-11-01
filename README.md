@@ -146,4 +146,53 @@ ctest --test-dir build --output-on-failure
 ```bash
 python tools/make_report_assets.py
 ```
-This generates all transcripts, SVG plots, DOT diagrams, and replay frames into `docs/results/`.
+This generates all transcripts, SVG plots, DOT diagrams, replay frames, and self-contained interactive replay HTML sliders (`docs/results/replay.html` and `docs/results/compare.html`).
+
+---
+
+## Algorithm Replay Visualizer (`tools/animate.py`)
+
+`tools/animate.py` converts frame-by-frame DOT traces into **100% self-contained, interactive HTML players** with responsive inline SVG graphics (or base64-encoded PNGs). The generated HTML files work on any machine by direct double-click—**no web server, no CDN, and no external files required**.
+
+### CLI Usage
+
+```bash
+# Single Algorithm Replay:
+python tools/animate.py --frames <dir> --out replay.html [--format svg|png] [--title "..."]
+
+# Side-by-Side Algorithm Comparison (e.g. Prim vs Kruskal):
+python tools/animate.py --left <prim_dir> --right <kruskal_dir> --out compare.html
+
+# Display Command-Line Help:
+python tools/animate.py --help
+```
+
+### Graphviz Installation (Optional)
+
+The system automatically detects `dot` in `PATH` or standard installation directories. To install Graphviz:
+- **Windows**: `winget install Graphviz.Graphviz`
+- **macOS**: `brew install graphviz`
+- **Linux (Ubuntu/Debian)**: `sudo apt install graphviz`
+
+### Graceful Fallback Mode
+
+If Graphviz is not installed:
+- `tools/animate.py` exits cleanly with code `0`.
+- The HTML player is still generated with full interactive controls (Prev, Next, Play/Pause, range slider, keyboard navigation).
+- A prominent yellow alert banner is displayed at the top explaining how to install Graphviz.
+- The frame viewport displays syntax-highlighted DOT source code in place of rendered graphics.
+
+### Interactive Controls & Keyboard Shortcuts
+
+- **Prev / Next Buttons & Slider**: Step frame-by-frame or scrub through execution.
+- **Play / Pause**: Auto-play algorithm progression at 1 frame per second.
+- **Running Cost Badge**: Displays cumulative tree cost updated at each step.
+- **Side-by-Side Mode**: Shows synchronized Prim vs Kruskal execution with automated MST cost match verification (`5,300` vs `5,300`).
+- **Keyboard Shortcuts**:
+  - `←` (Left Arrow): Previous step
+  - `→` (Right Arrow): Next step
+  - `Space`: Toggle Play / Pause
+  - `Home`: Jump to first frame
+  - `End`: Jump to final frame
+
+

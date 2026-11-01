@@ -141,8 +141,14 @@ Allows saving:
 2. The computed MST edges to `mst_result.csv`.
 3. A comprehensive text report summarizing the network topology, chosen cables, and cost metrics.
 
-### Option 8: Export Graphviz DOT
-Exports the graph structure to Graphviz `.dot` format. If `dot` is installed on the host system, it automatically invokes `dot -Tpng` to render a high-resolution PNG diagram. If `dot` is missing, it notifies the user and preserves the `.dot` file without crashing.
+### Option 8: Export Graphviz DOT & Interactive Algorithm Replay
+Exports the graph structure and provides an interactive sub-menu:
+1. **Export static MST DOT**: Saves the current MST with critical bridge highlighting to a `.dot` file. If Graphviz `dot` is installed, automatically renders a PNG diagram.
+2. **Interactive Algorithm Replay (HTML)**: Records frame-by-frame DOT transitions and runs `tools/animate.py` to compile a 100% self-contained HTML replay player.
+   - **Sub-option 1**: Replay Kruskal's algorithm (edge sorting, cycle detection, DSU unions).
+   - **Sub-option 2**: Replay Prim's algorithm (cut-edge expansion, decreaseKey updates).
+   - **Sub-option 3**: Side-by-side Prim vs Kruskal comparison with shared timeline slider.
+If Python or Graphviz are absent, the application gracefully saves the DOT frames and provides an informative instruction banner without crashing.
 
 ### Option 9: Failure-Resilience & Sensitivity Analysis
 Computes:
@@ -161,16 +167,52 @@ Sweeps graph scales ($V = 100 \dots 5000$) across sparse and dense topologies, r
 
 ## 5. Visualizations & Replay Tools
 
-### 5.1. Algorithm Replay (HTML Slider / GIF)
-Generate frame-by-frame DOT files during execution, then run:
+### 5.1. Algorithm Replay Player (`tools/animate.py`)
+
+`tools/animate.py` builds interactive HTML sliders that render every frame as responsive inline SVG (or base64 PNG), requiring **no web server, no CDN, and zero external dependencies**. The resulting HTML files open instantly by double-clicking in any web browser.
+
+#### CLI Syntax
 ```bash
-python tools/animate.py --dir docs/results/replay_frames --output docs/results/replay.html
+# Single Algorithm Replay:
+python tools/animate.py --frames <dir> --out replay.html [--format svg|png] [--title "..."]
+
+# Side-by-Side Algorithm Comparison:
+python tools/animate.py --left <prim_frames> --right <kruskal_frames> --out compare.html
+
+# View CLI Help & Flags:
+python tools/animate.py --help
 ```
-Open `docs/results/replay.html` in any web browser to interactively step forward, backward, or auto-play through the algorithm execution with color-coded edge events:
-- **Green (Bold)**: Edge accepted into the tree.
-- **Red (Dashed)**: Edge rejected (cycle detected).
-- **Orange/Yellow**: Edge currently under candidate consideration.
-- **Gray (Dotted)**: Unvisited potential cables.
+
+#### Graphviz Installation (Optional)
+The script searches the system `PATH` and common installation paths (`C:\Program Files\Graphviz\bin`, `~/tools/Graphviz/bin`, etc.) for `dot.exe` / `dot`:
+- **Windows**: `winget install Graphviz.Graphviz`
+- **macOS**: `brew install graphviz`
+- **Linux**: `sudo apt install graphviz`
+
+#### Graceful Fallback Mode
+If Graphviz `dot` is not installed on the system:
+- The script finishes with exit code `0`.
+- The HTML slider remains fully interactive with all controls functional.
+- A prominent yellow alert banner explains: *"Graphviz not found: displaying DOT source fallback. Install Graphviz and re-run to see rendered graphs."*
+- Frame contents are displayed inside a styled, dark-mode code block.
+
+#### Controls & Color Coding
+- **Prev / Next**: Step one edge event backward or forward.
+- **Play / Pause**: Auto-play through frames (~1 second interval, halts at completion).
+- **Range Slider**: Scrub across algorithm frames.
+- **Running Total Cost Badge**: Dynamic readout of the MST cost accumulated up to the active frame.
+- **Side-by-Side Mode**: Synchronized comparison showing Prim and Kruskal steps with automated cost equivalence verification.
+- **Keyboard Shortcuts**:
+  - `←` (Left Arrow): Previous step
+  - `→` (Right Arrow): Next step
+  - `Space`: Toggle Play / Pause
+  - `Home`: Jump to first frame
+  - `End`: Jump to final frame
+- **Edge Color Legend**:
+  - **Green (Thick)**: Accepted into MST
+  - **Red (Dashed)**: Rejected (forms a cycle)
+  - **Orange / Yellow**: Active candidate under evaluation
+  - **Gray (Dotted)**: Unvisited potential cables
 
 ### 5.2. Benchmark Plotting Tool
 To visualize empirical complexity and scaling slopes:
@@ -178,3 +220,4 @@ To visualize empirical complexity and scaling slopes:
 python tools/plot_benchmarks.py --csv docs/results/benchmarks.csv --svg docs/results/benchmarks_plot.svg
 ```
 Produces an SVG chart and reports the fitted scaling exponents (slopes $\beta$).
+

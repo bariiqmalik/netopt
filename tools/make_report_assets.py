@@ -60,11 +60,25 @@ def run():
     subprocess.run([exe_path, "--export-dot", "data/sample_disconnected_vertices.csv", "data/sample_disconnected_edges.csv", os.path.join(results_dir, "disconnected_mst.dot")], check=True)
     subprocess.run([exe_path, "--export-dot", "data/sample_large_vertices.csv", "data/sample_large_edges.csv", os.path.join(results_dir, "large_mst.dot")], check=True)
 
-    # 4. Create interactive replay player using animate.py
+    # 4. Create interactive replay player and side-by-side comparison using animate.py
     animate_script = os.path.join(root_dir, "tools", "animate.py")
     if os.path.exists(animate_script):
         print("Generating animation replay slider...")
-        subprocess.run([sys.executable, animate_script, "--dir", replay_dir, "--output", os.path.join(results_dir, "replay.html")])
+        subprocess.run([sys.executable, animate_script, "--frames", replay_dir, "--out", os.path.join(results_dir, "replay.html")], check=True)
+
+        prim_replay_dir = os.path.join(results_dir, "replay_prim")
+        kruskal_replay_dir = os.path.join(results_dir, "replay_kruskal")
+        compare_html = os.path.join(results_dir, "compare.html")
+        print("Generating side-by-side comparison HTML...")
+        subprocess.run([
+            exe_path,
+            "--compare-replay",
+            "data/sample_small_vertices.csv",
+            "data/sample_small_edges.csv",
+            prim_replay_dir,
+            kruskal_replay_dir,
+            compare_html
+        ], check=True)
 
     print("\nAll report assets successfully generated in docs/results/!")
 

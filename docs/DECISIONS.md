@@ -72,3 +72,15 @@ This log documents all architectural decisions, design choices, and tradeoffs ma
 * **Context**: Finding the non-tree edge tolerance requires determining the maximum edge on the unique cycle formed by adding a non-tree edge $(u, v)$ to the MST.
 * **Decision**: Implement $O(V \log V)$ tree preprocessing with binary lifting (`up[k][v]` and `maxEdge[k][v]`), enabling $O(\log V)$ queries for path-maximum edge per non-tree edge.
 * **Consequence**: Computes all edge tolerances, bridge detection, and second-best MST in $O(E \log V)$ total time, scaling efficiently even to large graphs.
+
+---
+
+## Decision 10: Self-Contained Graphical Replay with Inline SVG and Graceful Graphviz Fallback
+* **Context**: Algorithm replay animations previously displayed raw DOT source code in browser frames when Graphviz was not detected on the machine. Acceptance criteria require that the HTML slider is 100% self-contained, operates by direct double-click without a web server or external CDN dependencies, renders all frames graphically as inline SVG or base64 PNG, and provides a clear fallback notice when `dot` is absent.
+* **Decision**:
+  1. `tools/animate.py` discovers Graphviz `dot` across standard system paths (`PATH`, `C:\Program Files\Graphviz\bin`, `~/tools/Graphviz/bin`, `/usr/bin`, `/usr/local/bin`).
+  2. When `dot` is available, every frame is converted via `dot -Tsvg` into an inline `<svg>` element with `width`/`height` attributes stripped for responsive CSS scaling. Alternatively, `-Tpng` embeds base64 data URIs.
+  3. When `dot` is absent, the script outputs a clear yellow warning banner explaining how to install Graphviz (`winget`, `brew`, `apt`), provides a styled syntax block fallback, and exits with code 0.
+  4. Supports side-by-side comparison mode (`--left <dir>` and `--right <dir>`) with synchronized playback, algorithm titles, running total cost counters, and automated MST cost equivalence verification.
+* **Consequence**: High-fidelity, zero-dependency visualization that works out-of-the-box on any browser, with robust headless fallback.
+

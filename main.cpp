@@ -32,6 +32,56 @@ int main(int argc, char* argv[]) {
         return 0;
     }
 
+    // Check for compare-replay mode: netopt --compare-replay <v.csv> <e.csv> <prim_dir> <kruskal_dir> <out_html>
+    if (argc >= 7 && std::string(argv[1]) == "--compare-replay") {
+        std::string vFile = argv[2];
+        std::string eFile = argv[3];
+        std::string primDir = argv[4];
+        std::string kruskalDir = argv[5];
+        std::string outHtml = argv[6];
+
+        netopt::CsvGraphRepository repo;
+        netopt::DiagnosticsCollector diag;
+        auto gRes = repo.load(vFile, eFile, diag);
+        if (gRes.isErr()) {
+            std::cerr << "Failed to load graph: " << gRes.error() << "\n";
+            return 1;
+        }
+
+        const auto& g = gRes.value();
+        std::cout << "Recording Prim frames into " << primDir << "...\n";
+        {
+            netopt::DotFrameSink primSink(g, primDir, "frame_");
+            auto prim = netopt::AlgorithmFactory::create("Prim (Heap)");
+            prim->run(g, primSink);
+        }
+
+        std::cout << "Recording Kruskal frames into " << kruskalDir << "...\n";
+        {
+            netopt::DotFrameSink kruskalSink(g, kruskalDir, "frame_");
+            auto kruskal = netopt::AlgorithmFactory::create("Kruskal");
+            kruskal->run(g, kruskalSink);
+        }
+
+        std::cout << "Invoking animate.py for side-by-side comparison...\n";
+        std::string pythonBin = "python";
+        const char* localApp = std::getenv("LOCALAPPDATA");
+        if (localApp) {
+            std::string pyPath = std::string(localApp) + "\\Programs\\Python\\Python312\\python.exe";
+            if (std::filesystem::exists(pyPath)) pythonBin = "\"" + pyPath + "\"";
+        }
+        std::string cmd = pythonBin + " tools/animate.py --left \"" + primDir + "\" --right \"" + kruskalDir + "\" --out \"" + outHtml + "\"";
+        std::string sysCmd = "\"" + cmd + "\"";
+        int ret = std::system(sysCmd.c_str());
+        if (ret != 0) {
+            // Try with py or python3
+            std::string cmd3 = "\"python3 tools/animate.py --left \"" + primDir + "\" --right \"" + kruskalDir + "\" --out \"" + outHtml + "\"\"";
+            std::system(cmd3.c_str());
+        }
+        std::cout << "Side-by-side comparison generated at: " << outHtml << "\n";
+        return 0;
+    }
+
     // Check for export mode: netopt --export-dot <v.csv> <e.csv> <out.dot>
     if (argc >= 5 && std::string(argv[1]) == "--export-dot") {
         std::string vFile = argv[2];

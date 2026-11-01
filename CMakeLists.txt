@@ -72,7 +72,13 @@ target_link_libraries(netopt_tests PRIVATE netopt_core)
 
 add_test(NAME NetoptTests COMMAND netopt_tests)
 
+find_package(Python3 COMPONENTS Interpreter)
+if(Python3_FOUND)
+    add_test(NAME AnimateTests COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_animate.py)
+endif()
+
 # Benchmark Executable
 add_executable(netopt_benchmark tests/benchmark_runner.cpp)
 target_include_directories(netopt_benchmark PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(netopt_benchmark PRIVATE netopt_core)
+

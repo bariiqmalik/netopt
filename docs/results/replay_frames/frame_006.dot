@@ -1,5 +1,5 @@
 graph Frame {
-  label="ACCEPTED edge (Web-Server - Backup-Storage), cost=900\nStep 6";
+  label="ACCEPTED edge (Web-Server - Backup-Storage), cost=900\nRunning Cost: 2300 | Step 6";
   labelloc="t";
   node [shape=box, style="filled,rounded", fillcolor="#ECEFF1", fontname="Helvetica"];
   edge [fontname="Helvetica", fontsize=10];

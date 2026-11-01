@@ -493,16 +493,108 @@ void Menu::handleExportDot() {
             }
         }
     } else {
-        std::string outDir = readString("Enter directory for replay frames [default: replay_frames]: ", true);
-        if (outDir.empty()) outDir = "replay_frames";
+        std::cout << "\nAlgorithm Replay Options:\n";
+        std::cout << "1. Replay Kruskal's algorithm\n";
+        std::cout << "2. Replay Prim's algorithm\n";
+        std::cout << "3. Side-by-side comparison (Prim vs Kruskal)\n";
+        int replayChoice = readInt("Enter choice [1-3]: ", 1, 3);
 
-        std::cout << "Recording replay frames with DotFrameSink...\n";
-        DotFrameSink frameSink(*currentGraph_, outDir, "frame_");
-        auto kruskal = AlgorithmFactory::create("Kruskal");
-        kruskal->run(*currentGraph_, frameSink);
+        auto detectPython = []() -> std::string {
+            if (std::system("python --version >nul 2>nul") == 0) return "python";
+            if (std::system("python3 --version >nul 2>nul") == 0) return "python3";
+            const char* localApp = std::getenv("LOCALAPPDATA");
+            if (localApp) {
+                std::string pyPath = std::string(localApp) + "\\Programs\\Python\\Python312\\python.exe";
+                if (std::filesystem::exists(pyPath)) return "\"" + pyPath + "\"";
+            }
+            return "";
+        };
 
-        std::cout << "Generated " << frameSink.frameCount() << " DOT frames in directory '" << outDir << "'.\n";
-        std::cout << "You can animate them using: python tools/animate.py --dir " << outDir << "\n";
+        const std::string pythonBin = detectPython();
+
+        if (replayChoice == 1) {
+            std::string outDir = readString("Enter directory for Kruskal frames [default: replay_kruskal]: ", true);
+            if (outDir.empty()) outDir = "replay_kruskal";
+
+            std::cout << "Recording Kruskal frames with DotFrameSink...\n";
+            DotFrameSink frameSink(*currentGraph_, outDir, "frame_");
+            auto kruskal = AlgorithmFactory::create("Kruskal");
+            kruskal->run(*currentGraph_, frameSink);
+            std::cout << "Generated " << frameSink.frameCount() << " DOT frames in directory '" << outDir << "'.\n";
+
+            if (!pythonBin.empty()) {
+                std::string htmlOut = outDir + "/replay.html";
+                std::string cmd = pythonBin + " tools/animate.py --frames \"" + outDir + "\" --out \"" + htmlOut + "\" --title \"Kruskal Algorithm Replay\"";
+                std::cout << "Generating self-contained HTML replay slider...\n";
+                std::string sysCmd = "\"" + cmd + "\"";
+                int ret = std::system(sysCmd.c_str());
+                if (ret == 0) {
+                    std::cout << "Successfully generated replay HTML at: " << std::filesystem::absolute(htmlOut).string() << "\n";
+                    std::cout << "You can double-click this file to open it in any web browser.\n";
+                }
+            } else {
+                std::cout << "\n[INFO] Python was not found on PATH.\n";
+                std::cout << "DOT frames have been saved to '" << outDir << "'.\n";
+                std::cout << "To build the HTML player, install Python and run:\n";
+                std::cout << "  python tools/animate.py --frames \"" << outDir << "\" --out \"" << outDir << "/replay.html\"\n";
+            }
+        } else if (replayChoice == 2) {
+            std::string outDir = readString("Enter directory for Prim frames [default: replay_prim]: ", true);
+            if (outDir.empty()) outDir = "replay_prim";
+
+            std::cout << "Recording Prim frames with DotFrameSink...\n";
+            DotFrameSink frameSink(*currentGraph_, outDir, "frame_");
+            auto prim = AlgorithmFactory::create("Prim (Heap)");
+            prim->run(*currentGraph_, frameSink);
+            std::cout << "Generated " << frameSink.frameCount() << " DOT frames in directory '" << outDir << "'.\n";
+
+            if (!pythonBin.empty()) {
+                std::string htmlOut = outDir + "/replay.html";
+                std::string cmd = pythonBin + " tools/animate.py --frames \"" + outDir + "\" --out \"" + htmlOut + "\" --title \"Prim Algorithm Replay\"";
+                std::cout << "Generating self-contained HTML replay slider...\n";
+                std::string sysCmd = "\"" + cmd + "\"";
+                int ret = std::system(sysCmd.c_str());
+                if (ret == 0) {
+                    std::cout << "Successfully generated replay HTML at: " << std::filesystem::absolute(htmlOut).string() << "\n";
+                    std::cout << "You can double-click this file to open it in any web browser.\n";
+                }
+            } else {
+                std::cout << "\n[INFO] Python was not found on PATH.\n";
+                std::cout << "DOT frames have been saved to '" << outDir << "'.\n";
+                std::cout << "To build the HTML player, install Python and run:\n";
+                std::cout << "  python tools/animate.py --frames \"" << outDir << "\" --out \"" << outDir << "/replay.html\"\n";
+            }
+        } else {
+            std::string leftDir = "replay_prim";
+            std::string rightDir = "replay_kruskal";
+            std::string compareHtml = "compare.html";
+
+            std::cout << "Recording Prim frames to '" << leftDir << "'...\n";
+            DotFrameSink primSink(*currentGraph_, leftDir, "frame_");
+            auto prim = AlgorithmFactory::create("Prim (Heap)");
+            prim->run(*currentGraph_, primSink);
+
+            std::cout << "Recording Kruskal frames to '" << rightDir << "'...\n";
+            DotFrameSink kruskalSink(*currentGraph_, rightDir, "frame_");
+            auto kruskal = AlgorithmFactory::create("Kruskal");
+            kruskal->run(*currentGraph_, kruskalSink);
+
+            if (!pythonBin.empty()) {
+                std::string cmd = pythonBin + " tools/animate.py --left \"" + leftDir + "\" --right \"" + rightDir + "\" --out \"" + compareHtml + "\"";
+                std::cout << "Generating side-by-side comparison HTML...\n";
+                std::string sysCmd = "\"" + cmd + "\"";
+                int ret = std::system(sysCmd.c_str());
+                if (ret == 0) {
+                    std::cout << "Successfully generated side-by-side comparison HTML at: " << std::filesystem::absolute(compareHtml).string() << "\n";
+                    std::cout << "You can double-click this file to open it in any web browser.\n";
+                }
+            } else {
+                std::cout << "\n[INFO] Python was not found on PATH.\n";
+                std::cout << "Frames saved to '" << leftDir << "' and '" << rightDir << "'.\n";
+                std::cout << "To build the comparison, install Python and run:\n";
+                std::cout << "  python tools/animate.py --left \"" << leftDir << "\" --right \"" << rightDir << "\" --out \"" << compareHtml << "\"\n";
+            }
+        }
     }
 }
 

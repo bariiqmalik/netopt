@@ -1,5 +1,5 @@
 graph Frame {
-  label="ACCEPTED edge (Switch-Floor1 - Switch-Floor2), cost=800\nStep 4";
+  label="ACCEPTED edge (Switch-Floor1 - Switch-Floor2), cost=800\nRunning Cost: 1400 | Step 4";
   labelloc="t";
   node [shape=box, style="filled,rounded", fillcolor="#ECEFF1", fontname="Helvetica"];
   edge [fontname="Helvetica", fontsize=10];

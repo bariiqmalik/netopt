@@ -1,5 +1,5 @@
 graph Frame {
-  label="REJECTED edge (Core-Router - Switch-Floor2), cost=1500: Cycle detected\nStep 10";
+  label="REJECTED edge (Core-Router - Switch-Floor2): Cycle detected\nRunning Cost: 3500 | Step 10";
   labelloc="t";
   node [shape=box, style="filled,rounded", fillcolor="#ECEFF1", fontname="Helvetica"];
   edge [fontname="Helvetica", fontsize=10];

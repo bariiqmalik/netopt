@@ -1,5 +1,5 @@
 graph Frame {
-  label="Considering edge (Database-Server - Web-Server), cost=600\nStep 1";
+  label="Considering edge (Database-Server - Web-Server), cost=600\nRunning Cost: 0 | Step 1";
   labelloc="t";
   node [shape=box, style="filled,rounded", fillcolor="#ECEFF1", fontname="Helvetica"];
   edge [fontname="Helvetica", fontsize=10];

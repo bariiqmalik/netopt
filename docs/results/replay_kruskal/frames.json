@@ -1,0 +1,114 @@
+{
+  "frameCount": 12,
+  "finalCost": 5300,
+  "frames": [
+    {
+      "index": 1,
+      "filename": "frame_001.dot",
+      "eventType": "considered",
+      "edgeId": 7,
+      "edgeCost": 600,
+      "runningCost": 0,
+      "label": "Considering edge (Database-Server - Web-Server), cost=600"
+    },
+    {
+      "index": 2,
+      "filename": "frame_002.dot",
+      "eventType": "accepted",
+      "edgeId": 7,
+      "edgeCost": 600,
+      "runningCost": 600,
+      "label": "ACCEPTED edge (Database-Server - Web-Server), cost=600"
+    },
+    {
+      "index": 3,
+      "filename": "frame_003.dot",
+      "eventType": "considered",
+      "edgeId": 2,
+      "edgeCost": 800,
+      "runningCost": 600,
+      "label": "Considering edge (Switch-Floor1 - Switch-Floor2), cost=800"
+    },
+    {
+      "index": 4,
+      "filename": "frame_004.dot",
+      "eventType": "accepted",
+      "edgeId": 2,
+      "edgeCost": 800,
+      "runningCost": 1400,
+      "label": "ACCEPTED edge (Switch-Floor1 - Switch-Floor2), cost=800"
+    },
+    {
+      "index": 5,
+      "filename": "frame_005.dot",
+      "eventType": "considered",
+      "edgeId": 8,
+      "edgeCost": 900,
+      "runningCost": 1400,
+      "label": "Considering edge (Web-Server - Backup-Storage), cost=900"
+    },
+    {
+      "index": 6,
+      "filename": "frame_006.dot",
+      "eventType": "accepted",
+      "edgeId": 8,
+      "edgeCost": 900,
+      "runningCost": 2300,
+      "label": "ACCEPTED edge (Web-Server - Backup-Storage), cost=900"
+    },
+    {
+      "index": 7,
+      "filename": "frame_007.dot",
+      "eventType": "considered",
+      "edgeId": 0,
+      "edgeCost": 1200,
+      "runningCost": 2300,
+      "label": "Considering edge (Core-Router - Switch-Floor1), cost=1200"
+    },
+    {
+      "index": 8,
+      "filename": "frame_008.dot",
+      "eventType": "accepted",
+      "edgeId": 0,
+      "edgeCost": 1200,
+      "runningCost": 3500,
+      "label": "ACCEPTED edge (Core-Router - Switch-Floor1), cost=1200"
+    },
+    {
+      "index": 9,
+      "filename": "frame_009.dot",
+      "eventType": "considered",
+      "edgeId": 1,
+      "edgeCost": 1500,
+      "runningCost": 3500,
+      "label": "Considering edge (Core-Router - Switch-Floor2), cost=1500"
+    },
+    {
+      "index": 10,
+      "filename": "frame_010.dot",
+      "eventType": "rejected",
+      "edgeId": 1,
+      "edgeCost": 1500,
+      "runningCost": 3500,
+      "label": "REJECTED edge (Core-Router - Switch-Floor2): Cycle detected"
+    },
+    {
+      "index": 11,
+      "filename": "frame_011.dot",
+      "eventType": "considered",
+      "edgeId": 4,
+      "edgeCost": 1800,
+      "runningCost": 3500,
+      "label": "Considering edge (Switch-Floor1 - Web-Server), cost=1800"
+    },
+    {
+      "index": 12,
+      "filename": "frame_012.dot",
+      "eventType": "accepted",
+      "edgeId": 4,
+      "edgeCost": 1800,
+      "runningCost": 5300,
+      "label": "ACCEPTED edge (Switch-Floor1 - Web-Server), cost=1800"
+    }
+  ]
+}

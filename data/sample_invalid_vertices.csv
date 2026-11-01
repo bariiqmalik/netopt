@@ -1,0 +1,7 @@
+#netopt-schema:1
+id,label,type,x,y
+1,Node-1,host,0.0,0.0
+2,Node-2,host,10.0,0.0
+1,Duplicate-Node-1,host,20.0,0.0
+3,Bad-Coords,host,NaN,Invalid
+4,Node-4,host,30.0,0.0

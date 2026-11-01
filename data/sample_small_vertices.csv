@@ -1,0 +1,8 @@
+#netopt-schema:1
+id,label,type,x,y
+1,Core-Router,router,10.0,20.0
+2,Switch-Floor1,switch,25.0,20.0
+3,Switch-Floor2,switch,25.0,35.0
+4,Database-Server,server,40.0,15.0
+5,Web-Server,server,40.0,25.0
+6,Backup-Storage,storage,45.0,35.0

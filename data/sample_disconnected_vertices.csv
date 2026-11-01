@@ -1,0 +1,9 @@
+#netopt-schema:1
+id,label,type,x,y
+101,BldgA-Router,router,0.0,0.0
+102,BldgA-Switch,switch,10.0,0.0
+103,BldgA-Lab,workstation,20.0,5.0
+201,BldgB-Router,router,100.0,100.0
+202,BldgB-Switch,switch,110.0,100.0
+203,BldgB-Server,server,120.0,105.0
+301,Remote-Sensor,iot,500.0,500.0

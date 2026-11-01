@@ -1,0 +1,85 @@
+Loading network headlessly from data/sample_large_vertices.csv and data/sample_large_edges.csv...
+Loaded 40 vertices, 61 edges.
+MST Total Cost: 33275
+Components: 1
+Verification: Verified optimal (passed V-c edge count, acyclicity, spanning, and cycle optimality properties)
+
+
+============================== FAILURE RESILIENCE / SENSITIVITY REPORT ==============================
+1. MST TREE EDGE RESILIENCE & BRIDGES (Single Points of Failure):
+-----------------------------------------------------------------------------------------------------
+EdgeId  Endpoints               Cost      Status      Replacement     Repl. Cost  Delta Cost  
+-----------------------------------------------------------------------------------------------------
+2       DataCenter-Alpha -- Exchange-Point-23300      Protected   4 (DataCenter-Beta-Exchange-Point-2)3400        +100        
+6       DataCenter-Alpha -- Core-Switch-11500      Protected   12 (Core-Switch-1-Core-Switch-3)2400        +900        
+7       DataCenter-Beta -- Core-Switch-21600      Protected   13 (Core-Switch-2-Core-Switch-4)2500        +900        
+8       DataCenter-Alpha -- Core-Switch-31450      Protected   12 (Core-Switch-1-Core-Switch-3)2400        +950        
+9       DataCenter-Beta -- Core-Switch-41550      Protected   13 (Core-Switch-2-Core-Switch-4)2500        +950        
+15      Core-Switch-1 -- Distribution-N21100      Protected   14 (Core-Switch-1-Distribution-N1)1200        +100        
+16      Core-Switch-2 -- Distribution-N31150      Protected   17 (Core-Switch-2-Distribution-N4)1250        +100        
+19      Core-Switch-3 -- Distribution-S21120      Protected   18 (Core-Switch-3-Distribution-S1)1220        +100        
+20      Core-Switch-4 -- Distribution-S31180      Protected   21 (Core-Switch-4-Distribution-S4)1280        +100        
+22      Distribution-N1 -- Distribution-N2950       Protected   14 (Core-Switch-1-Distribution-N1)1200        +250        
+23      Distribution-N3 -- Distribution-N4980       Protected   17 (Core-Switch-2-Distribution-N4)1250        +270        
+24      Distribution-S1 -- Distribution-S2960       Protected   18 (Core-Switch-3-Distribution-S1)1220        +260        
+25      Distribution-S3 -- Distribution-S4990       Protected   21 (Core-Switch-4-Distribution-S4)1280        +290        
+27      Distribution-N1 -- Access-Pod-02550       Protected   26 (Distribution-N1-Access-Pod-01)600         +50         
+28      Distribution-N2 -- Access-Pod-03570       Protected   29 (Distribution-N2-Access-Pod-04)620         +50         
+31      Distribution-N3 -- Access-Pod-06540       Protected   30 (Distribution-N3-Access-Pod-05)580         +40         
+32      Distribution-N4 -- Access-Pod-07590       Protected   33 (Distribution-N4-Access-Pod-08)630         +40         
+35      Distribution-S1 -- Access-Pod-10560       Protected   34 (Distribution-S1-Access-Pod-09)610         +50         
+36      Distribution-S2 -- Access-Pod-11575       Protected   37 (Distribution-S2-Access-Pod-12)625         +50         
+39      Distribution-S3 -- Access-Pod-14545       Protected   38 (Distribution-S3-Access-Pod-13)585         +40         
+40      Distribution-S4 -- Access-Pod-15595       Protected   41 (Distribution-S4-Access-Pod-16)635         +40         
+42      DataCenter-Alpha -- Edge-Gateway-1850       CRITICAL    NONE (Bridge)   -           -           
+43      DataCenter-Beta -- Edge-Gateway-2870       CRITICAL    NONE (Bridge)   -           -           
+44      DataCenter-Alpha -- Edge-Gateway-3860       CRITICAL    NONE (Bridge)   -           -           
+45      DataCenter-Beta -- Edge-Gateway-4880       CRITICAL    NONE (Bridge)   -           -           
+46      DataCenter-Alpha -- Storage-SAN-1450       CRITICAL    NONE (Bridge)   -           -           
+47      DataCenter-Beta -- Storage-SAN-2460       CRITICAL    NONE (Bridge)   -           -           
+48      Exchange-Point-1 -- Monitoring-NOC-11800      Protected   49 (Exchange-Point-1-Monitoring-NOC-2)1850        +50         
+50      Monitoring-NOC-1 -- Monitoring-NOC-2300       Protected   49 (Exchange-Point-1-Monitoring-NOC-2)1850        +1550       
+51      Core-Switch-1 -- Monitoring-NOC-11200      Protected   1 (DataCenter-Alpha-Exchange-Point-1)3200        +2000       
+52      Core-Switch-2 -- Monitoring-NOC-21250      Protected   3 (DataCenter-Beta-Exchange-Point-1)3100        +1850       
+53      Access-Pod-01 -- Access-Pod-02250       Protected   26 (Distribution-N1-Access-Pod-01)600         +350        
+54      Access-Pod-03 -- Access-Pod-04250       Protected   29 (Distribution-N2-Access-Pod-04)620         +370        
+55      Access-Pod-05 -- Access-Pod-06250       Protected   30 (Distribution-N3-Access-Pod-05)580         +330        
+56      Access-Pod-07 -- Access-Pod-08250       Protected   33 (Distribution-N4-Access-Pod-08)630         +380        
+57      Access-Pod-09 -- Access-Pod-10250       Protected   34 (Distribution-S1-Access-Pod-09)610         +360        
+58      Access-Pod-11 -- Access-Pod-12250       Protected   37 (Distribution-S2-Access-Pod-12)625         +375        
+59      Access-Pod-13 -- Access-Pod-14250       Protected   38 (Distribution-S3-Access-Pod-13)585         +335        
+60      Access-Pod-15 -- Access-Pod-16250       Protected   41 (Distribution-S4-Access-Pod-16)635         +385        
+
+2. NON-MST EDGE TOLERANCES (Cost drop required to enter MST):
+-----------------------------------------------------------------------------------------------------
+EdgeId  Endpoints               Current CostMax Tree Edge   Max Path Cost Cost Tolerance
+-----------------------------------------------------------------------------------------------------
+0       DataCenter-Alpha -- DataCenter-Beta5500        Edge #7         1600          3900          
+1       DataCenter-Alpha -- Exchange-Point-13200        Edge #48        1800          1400          
+3       DataCenter-Beta -- Exchange-Point-13100        Edge #48        1800          1300          
+4       DataCenter-Beta -- Exchange-Point-23400        Edge #2         3300          100           
+5       Exchange-Point-1 -- Exchange-Point-24800        Edge #2         3300          1500          
+10      Core-Switch-1 -- Core-Switch-23800        Edge #52        1250          2550          
+11      Core-Switch-3 -- Core-Switch-43900        Edge #7         1600          2300          
+12      Core-Switch-1 -- Core-Switch-32400        Edge #6         1500          900           
+13      Core-Switch-2 -- Core-Switch-42500        Edge #7         1600          900           
+14      Core-Switch-1 -- Distribution-N11200        Edge #15        1100          100           
+17      Core-Switch-2 -- Distribution-N41250        Edge #16        1150          100           
+18      Core-Switch-3 -- Distribution-S11220        Edge #19        1120          100           
+21      Core-Switch-4 -- Distribution-S41280        Edge #20        1180          100           
+26      Distribution-N1 -- Access-Pod-01600         Edge #27        550           50            
+29      Distribution-N2 -- Access-Pod-04620         Edge #28        570           50            
+30      Distribution-N3 -- Access-Pod-05580         Edge #31        540           40            
+33      Distribution-N4 -- Access-Pod-08630         Edge #32        590           40            
+34      Distribution-S1 -- Access-Pod-09610         Edge #35        560           50            
+37      Distribution-S2 -- Access-Pod-12625         Edge #36        575           50            
+38      Distribution-S3 -- Access-Pod-13585         Edge #39        545           40            
+41      Distribution-S4 -- Access-Pod-16635         Edge #40        595           40            
+49      Exchange-Point-1 -- Monitoring-NOC-21850        Edge #48        1800          50            
+
+3. SECOND-BEST MINIMUM SPANNING TREE:
+-----------------------------------------------------------------------------------------------------
+Status: Found alternative spanning tree
+Total Cost: 33315 (Delta: +40)
+Substituted: Removed Tree Edge #31, Inserted Alternate Edge #30
+=====================================================================================================

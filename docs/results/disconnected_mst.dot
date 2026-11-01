@@ -1,0 +1,21 @@
+graph MST {
+  label="Minimum Spanning Tree\nTotal Cost: 1850";
+  labelloc="t";
+  node [shape=box, style="filled,rounded", fillcolor="#E8F5E9", fontname="Helvetica"];
+  edge [fontname="Helvetica", fontsize=10];
+
+  101 [label="BldgA-Router"];
+  102 [label="BldgA-Switch"];
+  103 [label="BldgA-Lab"];
+  201 [label="BldgB-Router"];
+  202 [label="BldgB-Switch"];
+  203 [label="BldgB-Server"];
+  301 [label="Remote-Sensor"];
+
+  101 -- 102 [label="500", color="#2E7D32", penwidth=2.5];
+  102 -- 103 [label="300", color="#2E7D32", penwidth=2.5];
+  101 -- 103 [label="700", color="#CFD8DC", style="dashed"];
+  201 -- 202 [label="450", color="#2E7D32", penwidth=2.5];
+  202 -- 203 [label="600", color="#2E7D32", penwidth=2.5];
+  201 -- 203 [label="900", color="#CFD8DC", style="dashed"];
+}

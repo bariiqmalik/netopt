@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="850" height="500" style="background:#ffffff; font-family:sans-serif;">
+<text x="425.0" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#263238">Algorithm Benchmark Scaling (Log-Log Runtime)</text>
+<line x1="70" y1="440" x2="670" y2="440" stroke="#37474F" stroke-width="2"/>
+<line x1="70" y1="60" x2="70" y2="440" stroke="#37474F" stroke-width="2"/>
+<text x="370.0" y="485" text-anchor="middle" font-size="13" fill="#37474F">Number of Vertices V (Log Scale)</text>
+<text transform="rotate(-90)" x="-250.0" y="20" text-anchor="middle" font-size="13" fill="#37474F">Duration in ms (Log Scale)</text>
+<circle cx="70.0" cy="382.1" r="4" fill="#7B1FA2"/>
+<circle cx="270.0" cy="287.7" r="4" fill="#7B1FA2"/>
+<circle cx="470.0" cy="181.3" r="4" fill="#7B1FA2"/>
+<circle cx="670.0" cy="78.8" r="4" fill="#7B1FA2"/>
+<polyline points="70.0,382.1 270.0,287.7 470.0,181.3 670.0,78.8" fill="none" stroke="#7B1FA2" stroke-width="2.5"/>
+<line x1="685" y1="80" x2="710" y2="80" stroke="#7B1FA2" stroke-width="3"/>
+<text x="715" y="84" font-size="11" fill="#263238">Kruskal (dense) [O(V^2.08)]</text>
+<circle cx="70.0" cy="440.0" r="4" fill="#1976D2"/>
+<circle cx="270.0" cy="380.2" r="4" fill="#1976D2"/>
+<circle cx="470.0" cy="344.3" r="4" fill="#1976D2"/>
+<circle cx="670.0" cy="291.2" r="4" fill="#1976D2"/>
+<polyline points="70.0,440.0 270.0,380.2 470.0,344.3 670.0,291.2" fill="none" stroke="#1976D2" stroke-width="2.5"/>
+<line x1="685" y1="104" x2="710" y2="104" stroke="#1976D2" stroke-width="3"/>
+<text x="715" y="108" font-size="11" fill="#263238">Kruskal (sparse) [O(V^0.98)]</text>
+<circle cx="70.0" cy="349.2" r="4" fill="#D32F2F"/>
+<circle cx="270.0" cy="250.7" r="4" fill="#D32F2F"/>
+<circle cx="470.0" cy="155.4" r="4" fill="#D32F2F"/>
+<circle cx="670.0" cy="60.0" r="4" fill="#D32F2F"/>
+<polyline points="70.0,349.2 270.0,250.7 470.0,155.4 670.0,60.0" fill="none" stroke="#D32F2F" stroke-width="2.5"/>
+<line x1="685" y1="128" x2="710" y2="128" stroke="#D32F2F" stroke-width="3"/>
+<text x="715" y="132" font-size="11" fill="#263238">Prim (Dense) (dense) [O(V^1.97)]</text>
+<circle cx="70.0" cy="387.2" r="4" fill="#F57C00"/>
+<circle cx="270.0" cy="303.7" r="4" fill="#F57C00"/>
+<circle cx="470.0" cy="213.5" r="4" fill="#F57C00"/>
+<circle cx="670.0" cy="125.3" r="4" fill="#F57C00"/>
+<polyline points="70.0,387.2 270.0,303.7 470.0,213.5 670.0,125.3" fill="none" stroke="#F57C00" stroke-width="2.5"/>
+<line x1="685" y1="152" x2="710" y2="152" stroke="#F57C00" stroke-width="3"/>
+<text x="715" y="156" font-size="11" fill="#263238">Prim (Dense) (sparse) [O(V^1.79)]</text>
+<circle cx="70.0" cy="360.4" r="4" fill="#00796B"/>
+<circle cx="270.0" cy="274.9" r="4" fill="#00796B"/>
+<circle cx="470.0" cy="183.5" r="4" fill="#00796B"/>
+<circle cx="670.0" cy="86.8" r="4" fill="#00796B"/>
+<polyline points="70.0,360.4 270.0,274.9 470.0,183.5 670.0,86.8" fill="none" stroke="#00796B" stroke-width="2.5"/>
+<line x1="685" y1="176" x2="710" y2="176" stroke="#00796B" stroke-width="3"/>
+<text x="715" y="180" font-size="11" fill="#263238">Prim (Heap) (dense) [O(V^1.86)]</text>
+<circle cx="70.0" cy="418.0" r="4" fill="#388E3C"/>
+<circle cx="270.0" cy="359.9" r="4" fill="#388E3C"/>
+<circle cx="470.0" cy="313.4" r="4" fill="#388E3C"/>
+<circle cx="670.0" cy="257.9" r="4" fill="#388E3C"/>
+<polyline points="70.0,418.0 270.0,359.9 470.0,313.4 670.0,257.9" fill="none" stroke="#388E3C" stroke-width="2.5"/>
+<line x1="685" y1="200" x2="710" y2="200" stroke="#388E3C" stroke-width="3"/>
+<text x="715" y="204" font-size="11" fill="#263238">Prim (Heap) (sparse) [O(V^1.08)]</text>
+</svg>

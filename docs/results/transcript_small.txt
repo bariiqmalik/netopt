@@ -1,0 +1,33 @@
+Loading network headlessly from data/sample_small_vertices.csv and data/sample_small_edges.csv...
+Loaded 6 vertices, 9 edges.
+MST Total Cost: 5300
+Components: 1
+Verification: Verified optimal (passed V-c edge count, acyclicity, spanning, and cycle optimality properties)
+
+
+============================== FAILURE RESILIENCE / SENSITIVITY REPORT ==============================
+1. MST TREE EDGE RESILIENCE & BRIDGES (Single Points of Failure):
+-----------------------------------------------------------------------------------------------------
+EdgeId  Endpoints               Cost      Status      Replacement     Repl. Cost  Delta Cost  
+-----------------------------------------------------------------------------------------------------
+0       Core-Router -- Switch-Floor11200      Protected   1 (Core-Router-Switch-Floor2)1500        +300        
+2       Switch-Floor1 -- Switch-Floor2800       Protected   1 (Core-Router-Switch-Floor2)1500        +700        
+4       Switch-Floor1 -- Web-Server1800      Protected   5 (Switch-Floor2-Web-Server)2100        +300        
+7       Database-Server -- Web-Server600       Protected   3 (Switch-Floor1-Database-Server)2200        +1600       
+8       Web-Server -- Backup-Storage900       Protected   6 (Switch-Floor2-Backup-Storage)2700        +1800       
+
+2. NON-MST EDGE TOLERANCES (Cost drop required to enter MST):
+-----------------------------------------------------------------------------------------------------
+EdgeId  Endpoints               Current CostMax Tree Edge   Max Path Cost Cost Tolerance
+-----------------------------------------------------------------------------------------------------
+1       Core-Router -- Switch-Floor21500        Edge #0         1200          300           
+3       Switch-Floor1 -- Database-Server2200        Edge #4         1800          400           
+5       Switch-Floor2 -- Web-Server2100        Edge #4         1800          300           
+6       Switch-Floor2 -- Backup-Storage2700        Edge #4         1800          900           
+
+3. SECOND-BEST MINIMUM SPANNING TREE:
+-----------------------------------------------------------------------------------------------------
+Status: Found alternative spanning tree
+Total Cost: 5600 (Delta: +300)
+Substituted: Removed Tree Edge #0, Inserted Alternate Edge #1
+=====================================================================================================

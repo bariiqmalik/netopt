@@ -1,0 +1,30 @@
+Loading network headlessly from data/sample_disconnected_vertices.csv and data/sample_disconnected_edges.csv...
+Loaded 7 vertices, 6 edges.
+MST Total Cost: 1850
+Components: 3
+Verification: Verified optimal (passed V-c edge count, acyclicity, spanning, and cycle optimality properties)
+
+
+============================== FAILURE RESILIENCE / SENSITIVITY REPORT ==============================
+1. MST TREE EDGE RESILIENCE & BRIDGES (Single Points of Failure):
+-----------------------------------------------------------------------------------------------------
+EdgeId  Endpoints               Cost      Status      Replacement     Repl. Cost  Delta Cost  
+-----------------------------------------------------------------------------------------------------
+0       BldgA-Router -- BldgA-Switch500       Protected   2 (BldgA-Router-BldgA-Lab)700         +200        
+1       BldgA-Switch -- BldgA-Lab300       Protected   2 (BldgA-Router-BldgA-Lab)700         +400        
+3       BldgB-Router -- BldgB-Switch450       Protected   5 (BldgB-Router-BldgB-Server)900         +450        
+4       BldgB-Switch -- BldgB-Server600       Protected   5 (BldgB-Router-BldgB-Server)900         +300        
+
+2. NON-MST EDGE TOLERANCES (Cost drop required to enter MST):
+-----------------------------------------------------------------------------------------------------
+EdgeId  Endpoints               Current CostMax Tree Edge   Max Path Cost Cost Tolerance
+-----------------------------------------------------------------------------------------------------
+2       BldgA-Router -- BldgA-Lab700         Edge #0         500           200           
+5       BldgB-Router -- BldgB-Server900         Edge #4         600           300           
+
+3. SECOND-BEST MINIMUM SPANNING TREE:
+-----------------------------------------------------------------------------------------------------
+Status: Found alternative spanning tree
+Total Cost: 2050 (Delta: +200)
+Substituted: Removed Tree Edge #0, Inserted Alternate Edge #2
+=====================================================================================================

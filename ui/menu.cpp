@@ -524,10 +524,9 @@ void Menu::handleExportDot() {
 
             if (!pythonBin.empty()) {
                 std::string htmlOut = outDir + "/replay.html";
-                std::string cmd = pythonBin + " tools/animate.py --frames \"" + outDir + "\" --out \"" + htmlOut + "\" --title \"Kruskal Algorithm Replay\"";
+                std::string cmd = pythonBin + " tools/animate.py --frames " + outDir + " --out " + htmlOut + " --title \"Kruskal Algorithm Replay\"";
                 std::cout << "Generating self-contained HTML replay slider...\n";
-                std::string sysCmd = "\"" + cmd + "\"";
-                int ret = std::system(sysCmd.c_str());
+                int ret = std::system(cmd.c_str());
                 if (ret == 0) {
                     std::cout << "Successfully generated replay HTML at: " << std::filesystem::absolute(htmlOut).string() << "\n";
                     std::cout << "You can double-click this file to open it in any web browser.\n";
@@ -536,7 +535,7 @@ void Menu::handleExportDot() {
                 std::cout << "\n[INFO] Python was not found on PATH.\n";
                 std::cout << "DOT frames have been saved to '" << outDir << "'.\n";
                 std::cout << "To build the HTML player, install Python and run:\n";
-                std::cout << "  python tools/animate.py --frames \"" << outDir << "\" --out \"" << outDir << "/replay.html\"\n";
+                std::cout << "  python tools/animate.py --frames " << outDir << " --out " << outDir << "/replay.html\n";
             }
         } else if (replayChoice == 2) {
             std::string outDir = readString("Enter directory for Prim frames [default: replay_prim]: ", true);
@@ -550,10 +549,9 @@ void Menu::handleExportDot() {
 
             if (!pythonBin.empty()) {
                 std::string htmlOut = outDir + "/replay.html";
-                std::string cmd = pythonBin + " tools/animate.py --frames \"" + outDir + "\" --out \"" + htmlOut + "\" --title \"Prim Algorithm Replay\"";
+                std::string cmd = pythonBin + " tools/animate.py --frames " + outDir + " --out " + htmlOut + " --title \"Prim Algorithm Replay\"";
                 std::cout << "Generating self-contained HTML replay slider...\n";
-                std::string sysCmd = "\"" + cmd + "\"";
-                int ret = std::system(sysCmd.c_str());
+                int ret = std::system(cmd.c_str());
                 if (ret == 0) {
                     std::cout << "Successfully generated replay HTML at: " << std::filesystem::absolute(htmlOut).string() << "\n";
                     std::cout << "You can double-click this file to open it in any web browser.\n";
@@ -562,7 +560,7 @@ void Menu::handleExportDot() {
                 std::cout << "\n[INFO] Python was not found on PATH.\n";
                 std::cout << "DOT frames have been saved to '" << outDir << "'.\n";
                 std::cout << "To build the HTML player, install Python and run:\n";
-                std::cout << "  python tools/animate.py --frames \"" << outDir << "\" --out \"" << outDir << "/replay.html\"\n";
+                std::cout << "  python tools/animate.py --frames " << outDir << " --out " << outDir << "/replay.html\n";
             }
         } else {
             std::string leftDir = "replay_prim";
@@ -580,10 +578,9 @@ void Menu::handleExportDot() {
             kruskal->run(*currentGraph_, kruskalSink);
 
             if (!pythonBin.empty()) {
-                std::string cmd = pythonBin + " tools/animate.py --left \"" + leftDir + "\" --right \"" + rightDir + "\" --out \"" + compareHtml + "\"";
+                std::string cmd = pythonBin + " tools/animate.py --left " + leftDir + " --right " + rightDir + " --out " + compareHtml;
                 std::cout << "Generating side-by-side comparison HTML...\n";
-                std::string sysCmd = "\"" + cmd + "\"";
-                int ret = std::system(sysCmd.c_str());
+                int ret = std::system(cmd.c_str());
                 if (ret == 0) {
                     std::cout << "Successfully generated side-by-side comparison HTML at: " << std::filesystem::absolute(compareHtml).string() << "\n";
                     std::cout << "You can double-click this file to open it in any web browser.\n";
@@ -592,7 +589,7 @@ void Menu::handleExportDot() {
                 std::cout << "\n[INFO] Python was not found on PATH.\n";
                 std::cout << "Frames saved to '" << leftDir << "' and '" << rightDir << "'.\n";
                 std::cout << "To build the comparison, install Python and run:\n";
-                std::cout << "  python tools/animate.py --left \"" << leftDir << "\" --right \"" << rightDir << "\" --out \"" << compareHtml << "\"\n";
+                std::cout << "  python tools/animate.py --left " << leftDir << " --right " << rightDir << " --out " << compareHtml << "\n";
             }
         }
     }

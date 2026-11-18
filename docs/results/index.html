@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOpt - Network Cable Optimization System</title>
+    <style>
+        :root {
+            --primary: #1976D2;
+            --primary-dark: #0D47A1;
+            --primary-light: #E3F2FD;
+            --accent: #00897B;
+            --surface: #FFFFFF;
+            --bg: #F4F7FA;
+            --text-main: #263238;
+            --text-muted: #546E7A;
+            --border: #CFD8DC;
+            --success: #2E7D32;
+            --warning: #F57C00;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .brand-text h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            line-height: 1.2;
+        }
+
+        .brand-text p {
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+
+        .nav-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 6px rgba(25, 118, 210, 0.3);
+        }
+
+        main {
+            flex: 1;
+            max-width: 1440px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 24px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, #0D47A1, #1976D2);
+            color: white;
+            border-radius: 14px;
+            padding: 28px 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 24px rgba(13, 71, 161, 0.15);
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .hero-content h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .hero-content p {
+            font-size: 15px;
+            opacity: 0.92;
+            max-width: 750px;
+            line-height: 1.5;
+        }
+
+        .hero-badges {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .hero-badge {
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(8px);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 16px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .icon-compare { background: #E1F5FE; color: #0288D1; }
+        .icon-replay { background: #E8F5E9; color: #2E7D32; }
+        .icon-bench { background: #FFF3E0; color: #EF6C00; }
+
+        .card-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 4px;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #ECEFF1;
+            padding-top: 14px;
+        }
+
+        .action-btn {
+            background: var(--primary);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: background 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .action-btn.secondary {
+            background: #ECEFF1;
+            color: var(--text-main);
+        }
+
+        .action-btn.secondary:hover {
+            background: #CFD8DC;
+        }
+
+        .viewer-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            height: 780px;
+        }
+
+        .viewer-header {
+            padding: 12px 20px;
+            background: #FAFAFA;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .viewer-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .viewer-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #FFFFFF;
+        }
+
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .report-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        .report-box h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .report-box pre {
+            background: #263238;
+            color: #ECEFF1;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-family: Consolas, monospace;
+            max-height: 180px;
+            overflow: auto;
+            white-space: pre-wrap;
+        }
+
+        footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 18px 32px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <div class="brand-icon">⚡</div>
+            <div class="brand-text">
+                <h1>NetOpt Visualizer</h1>
+                <p>Minimum Spanning Tree & Resilience Explorer</p>
+            </div>
+        </div>
+        <nav class="nav-tabs">
+            <button class="nav-btn active" onclick="loadView('compare.html', this)">
+                <span>⚖️</span> Compare Algorithms
+            </button>
+            <button class="nav-btn" onclick="loadView('replay.html', this)">
+                <span>🎬</span> Kruskal Replay
+            </button>
+            <button class="nav-btn" onclick="loadView('benchmarks_plot.svg', this)">
+                <span>📊</span> Scaling Benchmarks
+            </button>
+            <a href="compare.html" target="_blank" class="nav-btn">
+                <span>↗</span> Open Fullscreen
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-banner">
+            <div class="hero-content">
+                <h2>C++20 Network Cabling Optimization Engine</h2>
+                <p>Pure standard C++20 MST solver featuring deterministic composite ordering, indexed 4-ary min-heaps, and real-time failure-resilience analysis.</p>
+            </div>
+            <div class="hero-badges">
+                <div class="hero-badge">✔ 100% Identical Edge Sets</div>
+                <div class="hero-badge">✔ Indexed 4-Ary Heap</div>
+                <div class="hero-badge">✔ 4 Mathematical Invariants Verified</div>
+            </div>
+        </section>
+
+        <section class="card-grid">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon icon-compare">⚖️</div>
+                    <div>
+                        <div class="card-title">Side-by-Side Comparison</div>
+                        <div class="card-desc">Synchronized interactive scrubber contrasting Prim's Heap cut-edge relaxation against Kruskal's cycle-checking DSU unions.</div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span style="font-size: 12px; color: var(--success); font-weight: 600;">● Synchronized Timeline</span>
+                    <button class="action-btn" onclick="loadView('compare.html')">Launch View</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon icon-replay">🎬</div>
+                    <div>
+                        <div class="card-title">Single Algorithm Replay</div>
+                        <div class="card-desc">Detailed frame-by-frame visualizer with play/pause, step controls, edge state inspection, and total cost tracker.</div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span style="font-size: 12px; color: var(--primary); font-weight: 600;">● Step-by-Step Frame Trace</span>
+                    <button class="action-btn" onclick="loadView('replay.html')">Launch View</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon icon-bench">📊</div>
+                    <div>
+                        <div class="card-title">Empirical Benchmark Scaling</div>
+                        <div class="card-desc">Log-log runtime charts evaluating Kruskal O(E log V) vs Prim Indexed Heap O(E log₄ V) vs Prim Dense O(V²).</div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span style="font-size: 12px; color: var(--warning); font-weight: 600;">● O(V = 100 .. 5000) Sweeps</span>
+                    <button class="action-btn" onclick="loadView('benchmarks_plot.svg')">Launch View</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="viewer-container">
+            <div class="viewer-header">
+                <div class="viewer-title" id="activeViewTitle">
+                    <span>⚡</span> <span>Active View: Side-by-Side Algorithm Comparison</span>
+                </div>
+                <div class="viewer-actions">
+                    <a id="externalLink" href="compare.html" target="_blank" class="action-btn secondary" style="font-size: 12px; padding: 6px 12px;">
+                        ↗ Open in New Window
+                    </a>
+                </div>
+            </div>
+            <iframe id="contentFrame" src="compare.html"></iframe>
+        </section>
+
+        <section>
+            <h3 style="font-size: 18px; color: var(--primary-dark); margin-bottom: 12px;">Console Solver & Resilience Transcripts</h3>
+            <div class="reports-grid">
+                <div class="report-box">
+                    <h4>Small Network (6 Vertices) <span style="font-size: 11px; color: var(--success); font-weight: normal;">61.6% Saved</span></h4>
+                    <pre>Loaded: 6 vertices, 9 edges
+MST Total Cost: 5300 (Full mesh: 13800)
+Status: Verified optimal
+Components: 1 (Connected)
+Resilience:
+ - Edge #0 (Core--Sw1): Protected (+300)
+ - Edge #2 (Sw1--Sw2): Protected (+700)
+ - Edge #7 (DB--Web): Protected (+1600)
+Second-Best MST: Cost 5600 (+300)</pre>
+                </div>
+
+                <div class="report-box">
+                    <h4>Large Network (40 Vertices) <span style="font-size: 11px; color: var(--success); font-weight: normal;">58.4% Saved</span></h4>
+                    <pre>Loaded: 40 vertices, 61 edges
+MST Total Cost: 33275
+Status: Verified optimal
+Bridges Identified (Single Points of Failure):
+ - Edge #42 (DataCenter-A -- Edge-Gateway-1)
+ - Edge #43 (DataCenter-B -- Edge-Gateway-2)
+ - Edge #46 (DataCenter-A -- Storage-SAN-1)
+ - Edge #47 (DataCenter-B -- Storage-SAN-2)</pre>
+                </div>
+
+                <div class="report-box">
+                    <h4>Disconnected Forest <span style="font-size: 11px; color: var(--warning); font-weight: normal;">2 Partitions</span></h4>
+                    <pre>Loaded: 8 vertices, 8 edges
+Components: 2 (Disconnected Forest)
+MSF Total Cost: 4850
+Edges Chosen: 6 (V - c = 8 - 2 = 6)
+Acyclicity & Component Spanning: PASSED</pre>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        Network Cable Optimization System (netopt) &bull; Pure C++20 Standard Library Architecture &bull; Self-Verifying Resilience Engine
+    </footer>
+
+    <script>
+        function loadView(url, buttonElem) {
+            const frame = document.getElementById('contentFrame');
+            const titleElem = document.getElementById('activeViewTitle');
+            const externalLink = document.getElementById('externalLink');
+
+            frame.src = url;
+            externalLink.href = url;
+
+            if (url.includes('compare')) {
+                titleElem.innerHTML = '<span>⚖️</span> <span>Active View: Side-by-Side Algorithm Comparison (Prim vs Kruskal)</span>';
+            } else if (url.includes('replay')) {
+                titleElem.innerHTML = '<span>🎬</span> <span>Active View: Single Algorithm Frame-by-Frame Replay</span>';
+            } else if (url.includes('benchmarks')) {
+                titleElem.innerHTML = '<span>📊</span> <span>Active View: Empirical Benchmark & Complexity Scaling Chart</span>';
+            }
+
+            if (buttonElem) {
+                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+                buttonElem.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
+

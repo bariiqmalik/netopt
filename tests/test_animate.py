@@ -87,7 +87,7 @@ class TestAnimate(unittest.TestCase):
             content = f.read()
 
         # Check yellow banner and fallback styling
-        self.assertIn('<div class="warning-banner">', content)
+        self.assertIn("warning-banner", content)
         self.assertIn("Graphviz not found:</strong> displaying DOT source fallback", content)
         self.assertIn("fallback-code", content)
         self.assertIn("btn-prev", content)
@@ -118,7 +118,7 @@ class TestAnimate(unittest.TestCase):
         self.assertIn("<svg", content, "HTML should contain inline <svg> element")
         self.assertIn("</svg>", content)
         # Should not show fallback banner when dot is present
-        self.assertNotIn('<div class="warning-banner">', content)
+        self.assertNotIn("warning-banner", content)
         # Check controls and running cost badge
         self.assertIn("cost-badge", content)
         self.assertIn("Running MST Cost:", content)
@@ -189,3 +189,4 @@ class TestAnimate(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

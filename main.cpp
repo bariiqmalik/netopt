@@ -64,18 +64,11 @@ int main(int argc, char* argv[]) {
         }
 
         std::cout << "Invoking animate.py for side-by-side comparison...\n";
-        std::string pythonBin = "python";
-        const char* localApp = std::getenv("LOCALAPPDATA");
-        if (localApp) {
-            std::string pyPath = std::string(localApp) + "\\Programs\\Python\\Python312\\python.exe";
-            if (std::filesystem::exists(pyPath)) pythonBin = "\"" + pyPath + "\"";
-        }
-        std::string cmd = pythonBin + " tools/animate.py --left \"" + primDir + "\" --right \"" + kruskalDir + "\" --out \"" + outHtml + "\"";
-        std::string sysCmd = "\"" + cmd + "\"";
-        int ret = std::system(sysCmd.c_str());
+        std::string cmd = "python tools/animate.py --left " + primDir + " --right " + kruskalDir + " --out " + outHtml;
+        int ret = std::system(cmd.c_str());
         if (ret != 0) {
             // Try with py or python3
-            std::string cmd3 = "\"python3 tools/animate.py --left \"" + primDir + "\" --right \"" + kruskalDir + "\" --out \"" + outHtml + "\"\"";
+            std::string cmd3 = "python3 tools/animate.py --left " + primDir + " --right " + kruskalDir + " --out " + outHtml;
             std::system(cmd3.c_str());
         }
         std::cout << "Side-by-side comparison generated at: " << outHtml << "\n";

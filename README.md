@@ -196,3 +196,9 @@ If Graphviz is not installed:
   - `End`: Jump to final frame
 
 
+
+---
+
+## ⭐ Support & Star
+
+If this implementation of Kruskal, Prim (4-ary heap), and CSR graphs in C++20 helped your understanding or coursework, **please consider giving this repository a star (⭐)!**

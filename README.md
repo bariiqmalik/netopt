@@ -202,3 +202,12 @@ If Graphviz is not installed:
 ## ⭐ Support & Star
 
 If this implementation of Kruskal, Prim (4-ary heap), and CSR graphs in C++20 helped your understanding or coursework, **please consider giving this repository a star (⭐)!**
+
+---
+
+## 🔍 Explore More Projects by Bariq Malik
+
+- 🎓 **[UniGrade Pro](https://github.com/bariiqmalik/unigrade-pro)** — Modern academic grade tracking, GPA/CGPA computation, and attendance predictor ([Live App](https://unigrade-pro.vercel.app)).
+- 👗 **[Fitting Room AI](https://github.com/bariiqmalik/fitcheck)** — Personal AI stylist & smart digitized wardrobe with body shape calibration (React, Vite, Supabase).
+- 🌾 **[Kisan Mandi Connect](https://github.com/bariiqmalik/kisan-mandi-connect)** — Indian agritech logistics solver using Dijkstra & 0/1 Knapsack DP in Core Java.
+- 💼 **[Portfolio](https://github.com/bariiqmalik/portfolio)** — Developer portfolio ([Live Site](https://bariiqmalik.github.io/portfolio/)).
